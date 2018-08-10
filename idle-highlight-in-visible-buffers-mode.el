@@ -61,11 +61,12 @@
   "Timer to trigger highlighting.")
 
 (defun idle-highlight-in-visible-buffers-buffers-list ()
-  "Given a list of buffers, return buffers which are currently visible"
+  "Given a list of buffers, return buffers which are currently visible."
   (let ((buffers '()))
     (walk-windows (lambda (w) (push (window-buffer w) buffers))) buffers))
 
 (defun idle-highlight-unhighlight-word-in-all-buffers ()
+  "Remove highlighting from all visible buffers."
   (save-window-excursion
     (dolist (buffer (idle-highlight-in-visible-buffers-buffers-list))
       (switch-to-buffer buffer)
@@ -74,7 +75,7 @@
     (setq idle-highlight-in-visible-buffers-regexp nil)))
 
 (defun idle-highlight-word-at-point-in-all-buffers ()
-  "Highlight the word under the point in all visible buffers"
+  "Highlight the word under the point in all visible buffers."
   (let* ((target-symbol (symbol-at-point))
          (target (symbol-name target-symbol)))
     (when (and target-symbol
@@ -99,4 +100,4 @@
     (idle-highlight-unhighlight-word-in-all-buffers)))
 
 (provide 'idle-highlight-in-visible-buffers-mode)
-;;; idle-highlight-in-visible-buffers.el ends here
+;;; idle-highlight-in-visible-buffers-mode.el ends here
