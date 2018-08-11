@@ -1,8 +1,9 @@
-;;; idle-highlight-in-visible-buffers.el --- highlight the word the point is on
+;;; idle-highlight-in-visible-buffers-mode.el --- highlight the word the point is on
 
 ;; Copyright (C) 2018  Ignacy Moryc
 
 ;; Author: Ignacy Moryc
+;; URL: https://github.com/ignacy/idle-highlight-in-visible-buffers
 ;; Version: 0.0.1
 ;; Keywords: convenience
 
@@ -65,7 +66,7 @@
   (let ((buffers '()))
     (walk-windows (lambda (w) (push (window-buffer w) buffers))) buffers))
 
-(defun idle-highlight-unhighlight-word-in-all-buffers ()
+(defun idle-highlight-in-visible-buffers-unhighlight-word ()
   "Remove highlighting from all visible buffers."
   (save-window-excursion
     (dolist (buffer (idle-highlight-in-visible-buffers-buffers-list))
@@ -74,13 +75,13 @@
         (unhighlight-regexp idle-highlight-in-visible-buffers-regexp)))
     (setq idle-highlight-in-visible-buffers-regexp nil)))
 
-(defun idle-highlight-word-at-point-in-all-buffers ()
+(defun idle-highlight-in-visible-buffers-highlight-word-at-point ()
   "Highlight the word under the point in all visible buffers."
   (let* ((target-symbol (symbol-at-point))
          (target (symbol-name target-symbol)))
     (when (and target-symbol
                (not (member target idle-highlight-in-visible-buffers-exceptions)))
-      (idle-highlight-unhighlight-word-in-all-buffers)
+      (idle-highlight-in-visible-buffers-unhighlight-word)
       (save-window-excursion
         (dolist (buffer (idle-highlight-in-visible-buffers-buffers-list))
           (switch-to-buffer buffer)
@@ -95,9 +96,9 @@
       (progn (unless idle-highlight-in-visible-buffers-global-timer
                (setq idle-highlight-in-visible-buffers-global-timer
                      (run-with-idle-timer idle-highlight-in-visible-buffers-idle-time
-                                          :repeat 'idle-highlight-word-at-point-in-all-buffers)))
+                                          :repeat 'idle-highlight-in-visible-buffers-highlight-word-at-point)))
              (set (make-local-variable 'idle-highlight-in-visible-buffers-regexp) nil))
-    (idle-highlight-unhighlight-word-in-all-buffers)))
+    (idle-highlight-in-visible-buffers-unhighlight-word)))
 
 (provide 'idle-highlight-in-visible-buffers-mode)
 ;;; idle-highlight-in-visible-buffers-mode.el ends here
