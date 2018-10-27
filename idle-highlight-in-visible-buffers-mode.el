@@ -41,7 +41,7 @@
   :group 'faces)
 
 (defface idle-highlight-in-visible-buffers
-  '((t (:inherit region)))
+  '((t (:inherit highlight)))
   "Face used to highlight other occurrences of the word at point."
   :group 'idle-highlight-in-visible-buffers)
 
