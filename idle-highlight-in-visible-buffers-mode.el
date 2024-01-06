@@ -70,7 +70,7 @@
   "Remove highlighting from all visible buffers."
   (save-window-excursion
     (dolist (buffer (idle-highlight-in-visible-buffers-buffers-list))
-      (switch-to-buffer buffer)
+      (set-buffer buffer)
       (when idle-highlight-in-visible-buffers-regexp
         (unhighlight-regexp idle-highlight-in-visible-buffers-regexp)))
     (setq idle-highlight-in-visible-buffers-regexp nil)))
@@ -84,7 +84,7 @@
       (idle-highlight-in-visible-buffers-unhighlight-word)
       (save-window-excursion
         (dolist (buffer (idle-highlight-in-visible-buffers-buffers-list))
-          (switch-to-buffer buffer)
+          (set-buffer buffer)
           (setq idle-highlight-in-visible-buffers-regexp (concat "\\<" (regexp-quote target) "\\>"))
           (highlight-regexp idle-highlight-in-visible-buffers-regexp 'idle-highlight-in-visible-buffers))))))
 
